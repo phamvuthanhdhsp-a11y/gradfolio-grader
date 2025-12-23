@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Gradfolio Rubric Grader</title>
+  <link rel="stylesheet" href="/static/styles.css"/>
+</head>
+<body>
+  <div class="container">
+    <h1>Chấm hồ sơ tốt nghiệp (PDF) theo Rubric</h1>
+
+    <div class="notice">
+      <div><b>OCR:</b> {{ "BẬT (Tesseract có sẵn)" if ocr_enabled else "TẮT (không tìm thấy Tesseract) — app vẫn chạy, chỉ trích text layer." }}</div>
+      <div><b>LLM:</b> {{ "BẬT (có OPENAI_API_KEY)" if has_openai_key else "TẮT (không có OPENAI_API_KEY) — dùng heuristic chấm tạm." }}</div>
+    </div>
+
+    <form action="/grade" method="post" enctype="multipart/form-data" class="card">
+      <label class="label">1) Upload PDF</label>
+      <input class="input" type="file" name="pdf" accept="application/pdf" required>
+
+      <label class="label">2) Chọn Rubric version</label>
+      <select class="input" name="rubric_version_id" required>
+        {% for v in versions %}
+          <option value="{{ v.version_id }}" {% if v.version_id == active_id %}selected{% endif %}>
+            {{ v.rubric_name }} — v{{ v.version }}{% if v.is_active %} (Active){% endif %} — max_total={{ v.max_total }}
+          </option>
+        {% endfor %}
+      </select>
+
+      <button class="btn primary" type="submit">Chấm điểm</button>
+    </form>
+
+    <div class="links">
+      <a href="/rubrics">Rubric Manager</a>
+      <span>•</span>
+      <a href="/history">History</a>
+      <span>•</span>
+      <a href="/docs" target="_blank">Swagger API Docs</a>
+    </div>
+  </div>
+</body>
+</html>

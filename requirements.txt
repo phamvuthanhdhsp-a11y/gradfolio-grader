@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+python-multipart
+pdfplumber
+pymupdf
+pytesseract
+pillow
+pydantic
+jinja2
+sqlalchemy
+openai
+httpx

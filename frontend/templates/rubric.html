@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Rubric Manager</title>
+  <link rel="stylesheet" href="/static/styles.css"/>
+  <script defer src="/static/app.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="topbar">
+      <a href="/">← Home</a>
+      <div class="spacer"></div>
+      <a href="/history">History</a>
+      <span>•</span>
+      <a href="/docs" target="_blank">Swagger</a>
+    </div>
+
+    <h1>Rubric Manager</h1>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Tạo Rubric mới</h3>
+        <div class="row">
+          <input class="input" id="newRubricName" placeholder="name (required)">
+        </div>
+        <div class="row">
+          <input class="input" id="newRubricUse" placeholder="target_use_case (optional)">
+        </div>
+        <div class="row">
+          <textarea class="input" id="newRubricDesc" placeholder="description (optional)" rows="3"></textarea>
+        </div>
+        <button class="btn primary" onclick="createRubric()">Create</button>
+        <div class="muted small">Sau khi tạo, bạn có thể tạo version bằng cách clone/edit JSON.</div>
+      </div>
+
+      <div class="card">
+        <h3>Import Rubric JSON</h3>
+        <form action="/api/rubrics/import" method="post" enctype="multipart/form-data">
+          <input class="input" type="file" name="file" accept="application/json" required>
+          <label class="checkbox">
+            <input type="checkbox" name="make_active" value="true"> Set Active sau khi import
+          </label>
+          <button class="btn" type="submit">Import</button>
+        </form>
+      </div>
+    </div>
+
+    <h2>Danh sách rubrics & versions</h2>
+
+    {% for block in data %}
+      <div class="card">
+        <div class="rubricHeader">
+          <div>
+            <div class="title">{{ block.rubric.name }}</div>
+            <div class="muted">{{ block.rubric.description or "" }}</div>
+            <div class="muted small">use_case: {{ block.rubric.target_use_case or "-" }} | rubric_id: {{ block.rubric.id }}</div>
+          </div>
+        </div>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Version</th>
+              <th>Active</th>
+              <th>max_total</th>
+              <th>Export</th>
+              <th>Set Active</th>
+              <th>Edit / Save as new version</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for v in block.versions %}
+              <tr>
+                <td>v{{ v.version }}</td>
+                <td class="center">{% if v.is_active %}<span class="pill">Active</span>{% endif %}</td>
+                <td class="center">{{ v.max_total }}</td>
+                <td class="center"><a class="btn small" href="/api/rubric_versions/{{ v.id }}/export" target="_blank">Export JSON</a></td>
+                <td class="center">
+                  <button class="btn small" onclick="setActive({{ v.id }})" {% if v.is_active %}disabled{% endif %}>
+                    Set Active
+                  </button>
+                </td>
+                <td class="center">
+                  <button class="btn small" onclick="openEditor({{ block.rubric.id }}, {{ v.id }})">Edit</button>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <div class="editor hidden" id="editor-{{ block.rubric.id }}">
+          <div class="row">
+            <div class="muted small">Tip: sửa JSON rồi bấm “Save as new version”. Nếu max_total > 9.0, UI sẽ cảnh báo.</div>
+          </div>
+          <div class="row">
+            <textarea class="input mono" rows="16" id="editorText-{{ block.rubric.id }}"></textarea>
+          </div>
+          <div class="row actions">
+            <label class="checkbox">
+              <input type="checkbox" id="makeActive-{{ block.rubric.id }}"> Make Active
+            </label>
+            <button class="btn primary" onclick="saveNewVersion({{ block.rubric.id }})">Save as new version</button>
+            <button class="btn" onclick="closeEditor({{ block.rubric.id }})">Close</button>
+          </div>
+          <div class="row">
+            <div class="warn hidden" id="warn-{{ block.rubric.id }}"></div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</body>
+</html>

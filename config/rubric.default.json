@@ -1,0 +1,105 @@
+{
+  "name": "Hồ sơ tốt nghiệp - CLO1..CLO4",
+  "description": "Rubric mặc định chấm hồ sơ tốt nghiệp theo CLO1..CLO4",
+  "target_use_case": "graduation_portfolio",
+  "max_total": 9.0,
+  "floor_soft": 4.5,
+  "min_evidence_clos": 3,
+  "scoring_rules": {
+    "warn_if_max_total_gt_9": true
+  },
+  "clos": [
+    {
+      "clo_id": "CLO1",
+      "title": "Sử dụng các nguồn lực một cách hiệu quả để thu thập minh chứng phù hợp (CLO1)",
+      "objective": "Đánh giá kế hoạch/chiến lược sử dụng nguồn lực (con người, công nghệ, dữ liệu) và chất lượng minh chứng.",
+      "levels": {
+        "4": {
+          "score_range": [1.5, 2.0],
+          "description": "Có kế hoạch/chiến lược rõ ràng dùng nguồn lực con người + công nghệ để tối ưu thu thập & sắp xếp minh chứng. Minh chứng đầy đủ, phù hợp, thuyết phục, gắn với nhận định/đánh giá phát triển năng lực nghề nghiệp và chuẩn đầu ra."
+        },
+        "3": {
+          "score_fixed": 1.0,
+          "description": "Có kế hoạch/chiến lược khá chi tiết nhưng chưa tối ưu. Một số minh chứng chưa liên quan trực tiếp hoặc chưa hỗ trợ mạnh cho nhận định tự đánh giá."
+        },
+        "2": {
+          "score_fixed": 0.5,
+          "description": "Có kế hoạch dùng một số nguồn lực nhưng còn sơ sài / phân bổ chưa hợp lý. Dữ liệu minh chứng rời rạc, khó thể hiện tiến bộ theo chuẩn đầu ra."
+        },
+        "1": {
+          "score_fixed": 0.0,
+          "description": "Chưa có kế hoạch hoặc kế hoạch không hợp lý. Minh chứng ít/không phù hợp, dùng nguồn lực kém hiệu quả, lãng phí thời gian."
+        }
+      }
+    },
+    {
+      "clo_id": "CLO2",
+      "title": "Tự đánh giá quá trình học tập, thích ứng với thay đổi để phát triển năng lực nghề nghiệp (CLO2)",
+      "objective": "Đánh giá chiều sâu tự phản tư, khả năng thích ứng, và minh chứng cho phát triển năng lực theo giai đoạn.",
+      "levels": {
+        "4": {
+          "score_range": [3.0, 4.0],
+          "description": "Báo cáo thể hiện lí tưởng/triết lí nghề nghiệp rõ ràng, thuyết phục. Tự đánh giá theo các giai đoạn học tập, nêu rõ thay đổi, cách thích ứng và cải tiến; làm nổi bật sự phát triển năng lực nghề nghiệp."
+        },
+        "3": {
+          "score_range": [2.0, 3.0],
+          "description": "Lí tưởng/triết lí nghề nghiệp khá rõ nhưng còn chỗ chưa thuyết phục. Tự đánh giá theo giai đoạn có, thể hiện phát triển nhưng chưa làm rõ khả năng thích ứng/cải tiến."
+        },
+        "2": {
+          "score_range": [1.0, 2.0],
+          "description": "Thể hiện được lí tưởng/triết lí nhưng còn sơ sài. Tự đánh giá có nhưng mô tả phát triển chưa rõ, ít liên kết minh chứng theo giai đoạn."
+        },
+        "1": {
+          "score_range": [0.0, 1.0],
+          "description": "Không thể hiện được lí tưởng/triết lí nghề nghiệp. Nội dung tự đánh giá thiếu hoặc hầu như không liên quan đến phát triển năng lực."
+        }
+      }
+    },
+    {
+      "clo_id": "CLO3",
+      "title": "Trình bày hồ sơ tốt nghiệp (CLO3)",
+      "objective": "Đánh giá cấu trúc logic, trình bày, ngôn ngữ, khả năng truyền tải đúng mục đích.",
+      "levels": {
+        "4": {
+          "score_fixed": 2.0,
+          "description": "Nội dung sắp xếp logic; từ ngữ rõ ràng, dễ hiểu; văn phong phù hợp; trình bày giúp truyền tải đúng mục đích hồ sơ."
+        },
+        "3": {
+          "score_fixed": 1.5,
+          "description": "Phần lớn logic, trình bày rõ; còn một số chỗ khó hiểu/diễn đạt chưa phù hợp ngữ cảnh."
+        },
+        "2": {
+          "score_fixed": 1.0,
+          "description": "Sắp xếp thiếu logic; diễn đạt khó hiểu ở nhiều chỗ; mục đích thể hiện chưa rõ."
+        },
+        "1": {
+          "score_fixed": 0.5,
+          "description": "Nội dung lộn xộn, không theo trình tự; nhiều lỗi dùng từ/diễn đạt; không thể hiện được mục đích hồ sơ."
+        }
+      }
+    },
+    {
+      "clo_id": "CLO4",
+      "title": "Đề xuất biện pháp phát huy điểm mạnh, khắc phục điểm hạn chế để phát triển bản thân (CLO4)",
+      "objective": "Đánh giá chất lượng phân tích SWOT cá nhân và tính cụ thể/khả thi của giải pháp phát triển.",
+      "levels": {
+        "4": {
+          "score_range": [1.5, 2.0],
+          "description": "Phân tích rõ điểm mạnh/yếu; đề xuất biện pháp cụ thể, sáng tạo, khả thi để phát huy/khắc phục và định hướng phát triển tương lai."
+        },
+        "3": {
+          "score_fixed": 1.0,
+          "description": "Phân tích được điểm mạnh/yếu; đề xuất một số biện pháp khá cụ thể nhưng chưa thật mạnh hoặc chưa toàn diện."
+        },
+        "2": {
+          "score_fixed": 0.5,
+          "description": "Phân tích được một phần nhưng còn sơ sài; biện pháp nêu ra còn chung chung, thiếu cụ thể."
+        },
+        "1": {
+          "score_fixed": 0.0,
+          "description": "Không phân tích được điểm mạnh/yếu hoặc biện pháp không cụ thể/không liên quan."
+        }
+      }
+    }
+  ]
+}

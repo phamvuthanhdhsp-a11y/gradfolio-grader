@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Kết quả chấm</title>
+  <link rel="stylesheet" href="/static/styles.css"/>
+</head>
+<body>
+  <div class="container">
+    <div class="topbar">
+      <a href="/">← Home</a>
+      <div class="spacer"></div>
+      <a href="/rubrics">Rubric Manager</a>
+      <span>•</span>
+      <a href="/history">History</a>
+    </div>
+
+    <h1>Kết quả chấm</h1>
+    <div class="card">
+      <div><b>File:</b> {{ result.file_name }}</div>
+      <div><b>Rubric:</b> rubric_id={{ result.rubric_id }}, version={{ result.rubric_version }}</div>
+      <div><b>Time:</b> {{ evaluation.created_at }}</div>
+    </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>CLO</th>
+          <th>Tiêu chí</th>
+          <th>Level</th>
+          <th>Score</th>
+          <th>Score range</th>
+          <th>Evidence</th>
+          <th>Rationale</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in result.clo_results %}
+        <tr>
+          <td><b>{{ c.clo_id }}</b></td>
+          <td>{{ c.title }}</td>
+          <td class="center">{{ c.level }}</td>
+          <td class="right">{{ "%.2f"|format(c.score) }}</td>
+          <td class="center">[{{ c.score_range[0] }}, {{ c.score_range[1] }}]</td>
+          <td>
+            {% if c.evidence %}
+              <ul>
+              {% for e in c.evidence %}
+                <li><b>{% if e.page %}p.{{ e.page }}{% else %}p.?{% endif %}</b>: {{ e.quote }}</li>
+              {% endfor %}
+              </ul>
+            {% else %}
+              <i>(no evidence)</i>
+            {% endif %}
+          </td>
+          <td>{{ c.rationale }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="totals card">
+      <div><b>Total raw:</b> {{ result.total_raw }}</div>
+      <div><b>Total adjusted:</b> {{ result.total_adjusted }}</div>
+      <div><b>Adjustment notes:</b> {{ result.adjustment_notes }}</div>
+    </div>
+
+    <div class="actions">
+      <a class="btn" href="/api/evaluations/{{ evaluation.id }}/report.json">Download report.json</a>
+      <a class="btn" href="/api/evaluations/{{ evaluation.id }}/report.html">Download report.html</a>
+    </div>
+  </div>
+</body>
+</html>
